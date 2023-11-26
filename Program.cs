@@ -5,20 +5,23 @@ namespace Shelly;
 public static class Program {
 
     public static async Task Main() {
-        var client = new HttpClient();
 
-        var shelly = new Shelly25 { BaseUri = "http://192.168.178.47" };
+        var shelly = new Shelly25 {
+            BaseUri    = "http://192.168.178.47",
+            HttpClient = new HttpClient()
+        };
 
         foreach (var channel in shelly.Channels) {
+            
             Console.WriteLine($"Channel {channel.Index}:");
 
-            var relayData = await channel.GetRelayAsync(client);
+            var relayData = await channel.GetRelayAsync();
             PrettyPrint(relayData);
 
-            var meterData = await channel.GetMeterAsync(client);
+            var meterData = await channel.GetMeterAsync();
             PrettyPrint(meterData);
 
-            var settingsData = await channel.GetRelaySettingsAsync(client);
+            var settingsData = await channel.GetRelaySettingsAsync();
             PrettyPrint(settingsData);
         }
 
@@ -26,15 +29,14 @@ public static class Program {
         // var c = await f.Content.ReadAsStringAsync();
         // System.Console.WriteLine(c);
 
-        await PrintStatus(client, shelly, channelNumber: 0);
-        await PrintStatus(client, shelly, channelNumber: 1);
+        await PrintStatus(shelly.Channels[0]);
+        await PrintStatus(shelly.Channels[1]);
     }
 
-    static async Task PrintStatus(HttpClient client, Shelly25 shelly, int channelNumber) {
-        var channel = shelly.Channels[channelNumber];
+    static async Task PrintStatus(Shelly25.Channel channel) {
 
-        var settings = await channel.GetRelaySettingsAsync(client);
-        var meter = await channel.GetMeterAsync(client);
+        var settings = await channel.GetRelaySettingsAsync();
+        var meter = await channel.GetMeterAsync();
 
         Console.WriteLine($"{settings?.Name}: {AnAus(settings?.IsOn)}, Power: {meter?.Power}W");
 

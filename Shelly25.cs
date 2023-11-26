@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 namespace Shelly;
 
 public class Shelly25 {
+
     public Shelly25() {
         Channels = [
             new Channel { Shelly = this, Index = 0 },
@@ -12,6 +13,7 @@ public class Shelly25 {
             ];
     }
 
+    public required HttpClient HttpClient { get; init; }
     public required string BaseUri { get; init; }
 
     public Channel Channel0 => Channels[0];
@@ -28,9 +30,9 @@ public class Shelly25 {
         public string MeterUri => $"{Shelly.BaseUri}/meter/{Index}";
         public string RelaySettingsUri => $"{Shelly.BaseUri}/settings/relay/{Index}";
 
-        public async Task<RelayData?> GetRelayAsync(HttpClient client) => await GetAsync<RelayData>(client, RelayUri);
-        public async Task<MeterData?> GetMeterAsync(HttpClient client) => await GetAsync<MeterData>(client, MeterUri);
-        public async Task<RelaySettingsData?> GetRelaySettingsAsync(HttpClient client) => await GetAsync<RelaySettingsData>(client, RelaySettingsUri);
+        public async Task<RelayData?> GetRelayAsync() => await GetAsync<RelayData>(Shelly.HttpClient, RelayUri);
+        public async Task<MeterData?> GetMeterAsync() => await GetAsync<MeterData>(Shelly.HttpClient, MeterUri);
+        public async Task<RelaySettingsData?> GetRelaySettingsAsync() => await GetAsync<RelaySettingsData>(Shelly.HttpClient, RelaySettingsUri);
     }
 
     static async Task<T?> GetAsync<T>(HttpClient client, string requestUri) {
