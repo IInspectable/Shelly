@@ -13,19 +13,19 @@ public static class Program
 
         var shelly = new Shelly { BaseUri = "http://192.168.178.47" };
 
-        // foreach (var channel in shelly.Channels)
-        // {
-        //     Console.WriteLine($"Channel {channel.Index}:");
+        foreach (var channel in shelly.Channels)
+        {
+            Console.WriteLine($"Channel {channel.Index}:");
 
-        //     var relayData = await channel.GetRelayAsync(client);
-        //     PrettyPrint(relayData);
+            var relayData = await channel.GetRelayAsync(client);
+            PrettyPrint(relayData);
 
-        //     var meterData = await channel.GetMeterAsync(client);
-        //     PrettyPrint(meterData);
+            var meterData = await channel.GetMeterAsync(client);
+            PrettyPrint(meterData);
 
-        //     var settingsData = await channel.GetRelaySettingsAsync(client);
-        //     PrettyPrint(settingsData);
-        // }
+            var settingsData = await channel.GetRelaySettingsAsync(client);
+            PrettyPrint(settingsData);
+        }
 
         // var f = await client.GetAsync("http://192.168.178.47/settings/relay/0");
         // var c = await f.Content.ReadAsStringAsync();
