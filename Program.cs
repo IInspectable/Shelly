@@ -4,17 +4,14 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.VisualBasic;
 
-public static class Program
-{
+public static class Program {
 
-    public static async Task Main()
-    {
+    public static async Task Main() {
         var client = new HttpClient();
 
         var shelly = new Shelly { BaseUri = "http://192.168.178.47" };
 
-        foreach (var channel in shelly.Channels)
-        {
+        foreach (var channel in shelly.Channels) {
             Console.WriteLine($"Channel {channel.Index}:");
 
             var relayData = await channel.GetRelayAsync(client);
@@ -35,8 +32,7 @@ public static class Program
         await PrintStatus(client, shelly, channelNumber: 1);
     }
 
-    static async Task PrintStatus(HttpClient client, Shelly shelly, int channelNumber)
-    {
+    static async Task PrintStatus(HttpClient client, Shelly shelly, int channelNumber) {
         var channel = shelly.Channels[channelNumber];
 
         var settings = await channel.GetRelaySettingsAsync(client);
@@ -44,20 +40,17 @@ public static class Program
 
         Console.WriteLine($"{settings?.Name}: {AnAus(settings?.IsOn)}, Power: {meter?.Power}W");
 
-        string AnAus(bool? value)
-        {
+        string AnAus(bool? value) {
             return value == true ? "An" : "Aus";
         }
     }
 
-    static void PrettyPrint<T>(T o)
-    {
+    static void PrettyPrint<T>(T o) {
         var s = FormatAsJson(o);
         Console.WriteLine(s);
     }
 
-    static string FormatAsJson<T>(T o)
-    {
+    static string FormatAsJson<T>(T o) {
         var s = JsonSerializer.Serialize(o, new JsonSerializerOptions { WriteIndented = true });
         return s;
     }
@@ -65,10 +58,8 @@ public static class Program
 }
 
 // https://shelly-api-docs.shelly.cloud/gen1/#shelly2-5
-public class Shelly
-{
-    public Shelly()
-    {
+public class Shelly {
+    public Shelly() {
         Channels = [
             new Channel { Shelly = this, Index = 0 },
             new Channel { Shelly = this, Index = 1 }
@@ -82,8 +73,7 @@ public class Shelly
 
     public ImmutableArray<Channel> Channels { get; }
 
-    public class Channel
-    {
+    public class Channel {
         public required Shelly Shelly { get; init; }
         public required int Index { get; init; }
         public string RelayUri => $"{Shelly.BaseUri}/relay/{Index}";
@@ -94,16 +84,14 @@ public class Shelly
         public async Task<RelaySettingsData?> GetRelaySettingsAsync(HttpClient client) => await GetAsync<RelaySettingsData>(client, RelaySettingsUri);
     }
 
-    static async Task<T?> GetAsync<T>(HttpClient client, string requestUri)
-    {
+    static async Task<T?> GetAsync<T>(HttpClient client, string requestUri) {
         var response = await client.GetAsync(requestUri);
         var json = await response.Content.ReadFromJsonAsync<T>();
         return json;
     }
 }
 
-public record RelayData
-{
+public record RelayData {
     [JsonPropertyName("ison")]
     public bool IsOn { get; init; }
 
@@ -132,8 +120,7 @@ public record RelayData
     public string? Source { get; init; }
 }
 
-public record MeterData
-{
+public record MeterData {
 
     [JsonPropertyName("power")]
     public double Power { get; init; }
@@ -154,8 +141,7 @@ public record MeterData
     public int Total { get; init; }
 }
 
-public record RelaySettingsData
-{
+public record RelaySettingsData {
     [JsonPropertyName("name")]
     public required string Name { get; init; }
 
