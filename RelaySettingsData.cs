@@ -1,6 +1,8 @@
 using System.Collections.Immutable;
 using System.Text.Json.Serialization;
 
+namespace Shelly;
+
 public record RelaySettingsData {
     [JsonPropertyName("name")]
     public required string Name { get; init; }

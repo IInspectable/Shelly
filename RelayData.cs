@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+namespace Shelly;
+
 public record RelayData {
     [JsonPropertyName("ison")]
     public bool IsOn { get; init; }
