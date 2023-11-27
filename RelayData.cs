@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 namespace Shelly;
 
 public record RelayData {
+
     [JsonPropertyName("ison")]
     public bool IsOn { get; init; }
 
@@ -29,4 +30,5 @@ public record RelayData {
 
     [JsonPropertyName("source")]
     public string? Source { get; init; }
+
 }

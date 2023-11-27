@@ -22,4 +22,5 @@ public record MeterData {
 
     [JsonPropertyName("total")]
     public int Total { get; init; }
+
 }

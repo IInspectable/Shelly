@@ -7,10 +7,8 @@ namespace Shelly;
 public class Shelly25 {
 
     public Shelly25() {
-        Channels = [
-            new Channel { Shelly = this, Index = 0 },
-            new Channel { Shelly = this, Index = 1 }
-            ];
+        Channels = [new Channel { Shelly = this, Index = 0 },
+                    new Channel { Shelly = this, Index = 1 } ];
     }
 
     public required HttpClient HttpClient { get; init; }

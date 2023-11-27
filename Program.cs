@@ -12,7 +12,7 @@ public static class Program {
         };
 
         foreach (var channel in shelly.Channels) {
-            
+
             Console.WriteLine($"Channel {channel.Index}:");
 
             var relayData = await channel.GetRelayAsync();
@@ -36,7 +36,7 @@ public static class Program {
     static async Task PrintStatus(Shelly25.Channel channel) {
 
         var settings = await channel.GetRelaySettingsAsync();
-        var meter = await channel.GetMeterAsync();
+        var meter    = await channel.GetMeterAsync();
 
         Console.WriteLine($"{settings?.Name}: {AnAus(settings?.IsOn)}, Power: {meter?.Power}W");
 
