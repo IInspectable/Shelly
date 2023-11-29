@@ -11,19 +11,19 @@ public static class Program {
             HttpClient = new HttpClient()
         };
 
-        foreach (var channel in shelly.Channels) {
+        // foreach (var channel in shelly.Channels) {
             
-            Console.WriteLine($"Channel {channel.Index}:");
+        //     Console.WriteLine($"Channel {channel.Index}:");
 
-            var relayData = await channel.GetRelayAsync();
-            PrettyPrint(relayData);
+        //     var relayData = await channel.GetRelayAsync();
+        //     PrettyPrint(relayData);
 
-            var meterData = await channel.GetMeterAsync();
-            PrettyPrint(meterData);
+        //     var meterData = await channel.GetMeterAsync();
+        //     PrettyPrint(meterData);
 
-            var settingsData = await channel.GetRelaySettingsAsync();
-            PrettyPrint(settingsData);
-        }
+        //     var settingsData = await channel.GetRelaySettingsAsync();
+        //     PrettyPrint(settingsData);
+        // }
 
         // var f = await client.GetAsync("http://192.168.178.47/settings/relay/0");
         // var c = await f.Content.ReadAsStringAsync();
