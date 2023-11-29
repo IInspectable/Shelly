@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 namespace Shelly;
 
 public record RelaySettingsData {
+
     [JsonPropertyName("name")]
     public required string Name { get; init; }
 
@@ -15,6 +16,7 @@ public record RelaySettingsData {
 
     [JsonPropertyName("has_timer")]
     public required bool HasTimer { get; init; }
+
     [JsonPropertyName("default_state")]
     public required string DefaultState { get; init; }
 
@@ -38,4 +40,5 @@ public record RelaySettingsData {
 
     [JsonPropertyName("schedule_rules")]
     public required ImmutableList<string> ScheduleRules { get; init; } = ImmutableList<string>.Empty;
+
 }
