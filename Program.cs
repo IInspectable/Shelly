@@ -40,7 +40,7 @@ public static class Program {
 
         Console.WriteLine($"{settings?.Name}: {AnAus(settings?.IsOn)}, Power: {meter?.Power}W");
 
-        string AnAus(bool? value) {
+        static string AnAus(bool? value) {
             return value == true ? "An" : "Aus";
         }
     }
